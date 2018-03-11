@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 const api = 'http://localhost:3001'
 
 let token = localStorage.token;
@@ -15,7 +17,7 @@ const headers = {
 //   USAGE:
 //     Get all of the categories available for the app. List is found in categories.js.
 export const retrieveAllCategories = () => {
-  fetch(`${api}/categories`, { headers })
+  return fetch(`${api}/categories`, { headers })
   .then(res => res.json())
   .then(data => data.categories)
 }
@@ -24,7 +26,7 @@ export const retrieveAllCategories = () => {
 //   USAGE:
 //     Get all of the posts for a particular category
 export const retrieveAllPostsInCategory = (category) => {
-  fetch(`${api}/${category}/posts`, { headers })
+  return fetch(`${api}/${category}/posts`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -33,7 +35,7 @@ export const retrieveAllPostsInCategory = (category) => {
 //   USAGE:
 //     Get all of the posts. Useful for the main page when no category is selected.
 export const retrieveAllPosts = () => {
-  fetch(`${api}/${posts}`, { headers })
+  return fetch(`${api}/posts`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -50,7 +52,7 @@ export const retrieveAllPosts = () => {
 //     author - String
 //     category: Any of the categories listed in categories.js. Feel free to extend this list as you desire.
 export const createNewPost = (newPost) => {
-  fetch(`${api}/posts`, {
+  return fetch(`${api}/posts`, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -67,7 +69,7 @@ export const createNewPost = (newPost) => {
 //   USAGE:
 //     Get the details of a single post
 export const retrieveSinglePost = (post) => {
-  fetch(`${api}/posts/${post.id}`, { headers })
+  return fetch(`${api}/posts/${post.id}`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -78,7 +80,7 @@ export const retrieveSinglePost = (post) => {
 //   PARAMS:
 //     option - String: Either "upVote" or "downVote"
 export const voteOnPost = (post, option) => {
-  fetch(`${api}/posts/${post.id}`, {
+  return fetch(`${api}/posts/${post.id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -96,7 +98,7 @@ export const voteOnPost = (post, option) => {
 //     title - String
 //     body - String
 export const editPostDetails = (post) => {
-  fetch(`${api}/posts/${post.id}`, {
+  return fetch(`${api}/posts/${post.id}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify({
@@ -114,7 +116,7 @@ export const editPostDetails = (post) => {
 //     Sets the deleted flag for a post to 'true'.
 //     Sets the parentDeleted flag for all child comments to 'true'.
 export const deletePost = (post) => {
-  fetch(`${api}/posts/${post.id}`, {
+  return fetch(`${api}/posts/${post.id}`, {
     method: 'DELETE',
     headers,
   })
@@ -126,7 +128,7 @@ export const deletePost = (post) => {
 //   USAGE:
 //     Get all the comments for a single post
 export const retrieveCommentsFromSinglePost = (post) => {
-  fetch(`${api}/posts/${post.id}/comments`, { headers })
+  return fetch(`${api}/posts/${post.id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -143,7 +145,7 @@ export const retrieveCommentsFromSinglePost = (post) => {
 //     parentId: Should match a post id in the database.
 //
 export const createNewComment = (newComment) => {
-  fetch(`${api}/comments`, {
+  return fetch(`${api}/comments`, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -161,7 +163,7 @@ export const createNewComment = (newComment) => {
 //     Get the details for a single comment
 //
 export const retrieveSingleComment = (comment) => {
-  fetch(`${api}/comments/${comment.id}`, { headers })
+  return fetch(`${api}/comments/${comment.id}`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -172,7 +174,7 @@ export const retrieveSingleComment = (comment) => {
 //   PARAMS:
 //     option - String: Either "upVote" or "downVote"
 export const voteOnComment = (comment, option) => {
-  fetch(`${api}/comments/${comment.id}`, {
+  return fetch(`${api}/comments/${comment.id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({
@@ -191,7 +193,7 @@ export const voteOnComment = (comment, option) => {
 //     timestamp: timestamp. Get this however you want.
 //     body: String
 export const editCommentDetails = (comment) => {
-  fetch(`${api}/comments/${comment.id}`, {
+  return fetch(`${api}/comments/${comment.id}`, {
     method: 'PUT',
     headers,
     body: JSON.stringify({
@@ -208,7 +210,7 @@ export const editCommentDetails = (comment) => {
 //   USAGE:
 //     Sets a comment's deleted flag to 'true'
 export const deleteComment = (comment) => {
-  fetch(`${api}/comments/${comment.id}`, {
+  return fetch(`${api}/comments/${comment.id}`, {
     method: 'DELETE',
     headers,
   })
