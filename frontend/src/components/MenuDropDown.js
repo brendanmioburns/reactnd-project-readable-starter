@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+import { MenuItem, MenuList } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 
 const style = {
@@ -11,9 +10,9 @@ const style = {
 export const MenuDropDown = () => (
   <div>
     <Paper style={style}>
-      <Menu>
+      <MenuList>
         <MenuItem primaryText="Categories"/>
-      </Menu>
+      </MenuList>
     </Paper>
   </div>
 )

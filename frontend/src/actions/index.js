@@ -11,14 +11,14 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 
-export function loadAllCategories ({ categories }) {
+export function loadAllCategories (categories) {
   return {
     type: LOAD_ALL_CATEGORIES,
     categories,
   }
 }
 
-export function loadAllPosts ({ posts }) {
+export function loadAllPosts (posts) {
   return {
     type: LOAD_ALL_POSTS,
     posts,

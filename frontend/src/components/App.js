@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 import logo from '../logo.svg';
 import '../App.css';
 import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import MenuDropDown from './MenuDropDown';
-import * as ForumAPI from '../utils/api';
+import { retrieveAllCategories, retrieveAllPosts } from '../utils/api';
 import * as Actions from '../actions';
 import Posts from './Posts';
 import CreatePost from './CreatePost';
 import EditPost from './EditPost';
+import PostsByCategory from './PostsByCategory';
 
 class App extends Component {
 
   state = {
+    categories: null,
     posts: null,
     comments: null,
     menuClicked: false,
@@ -27,9 +29,21 @@ class App extends Component {
     })
   }
 
+  getCategories = () => {
+    retrieveAllCategories()
+      .then((categories) => this.props.loadAllCategories(categories))
+  }
+
+  getPosts = () => {
+    retrieveAllPosts()
+      .then((posts) => this.props.loadAllPosts(posts))
+  }
+
   componentDidMount() {
-    ForumAPI.retrieveAllPosts()
-    ForumAPI.retrieveAllCategories()
+    this.getCategories()
+    console.log(this.state)
+    this.getPosts()
+    console.log(this.state)
   }
 
   render() {
@@ -44,10 +58,11 @@ class App extends Component {
           menuClicked={this.state.menuClicked}
         />
         <br/>
-        <RaisedButton label="Create Post" primary={true}/>
+        <Button label="Create Post" primary={true}/>
         <Switch>
-          <Route exact path="/" render={()=><Posts/>}/>
+          <Route exact path="/" render={()=><Posts />}/>
           <Route exact path="/new" component={CreatePost}/>
+          <Route exact path='/:category' component={PostsByCategory} />
           <Route exact path="/edit:id" component={EditPost}/>
 
         </Switch>
@@ -58,8 +73,9 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({ posts, comments }) {
+function mapStateToProps ({ categories, posts, comments }) {
   return {
+    categories,
     posts,
     comments,
   }
@@ -82,4 +98,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

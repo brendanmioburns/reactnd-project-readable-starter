@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import * as ForumAPI from '../utils/api';
+import { connect } from 'react-redux';
+import Post from './Post';
+import * as Actions from '../actions';
 import GridList, { GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
 import Paper from 'material-ui/Paper';
-import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
-import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
 const style = {
   height: 360,
@@ -60,23 +59,21 @@ const tilesData = [
 
 
 class Posts extends Component {
-  componentDidMount() {
-    const allPosts = ForumAPI.retrieveAllPosts()
-    console.log('all posts', allPosts)
-  }
+
   render () {
     return (
       <div>
         <GridList cellHeight={500} cellWidth={360} cols={1}>
           {tilesData.map((tile) => (
-            <GridTile
+            <Post
               key={tile.img}
               title={tile.title}
               subtitle={<span>by <b>{tile.author}</b></span>}
             >
               <br/>
+
               <Paper style={style} zDepth={5} />
-            </GridTile>
+            </Post>
           ))}
         </GridList>
       </div>
@@ -84,5 +81,20 @@ class Posts extends Component {
   }
 }
 
-export default Posts;
-// <IconButton><ThumbDown/></IconButton>
+function mapStateToProps ({ posts, comments }) {
+  return {
+    posts,
+    comments,
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    loadAllPosts: (data) => dispatch(Actions.loadAllPosts(data)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Posts);
