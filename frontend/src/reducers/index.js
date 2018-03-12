@@ -28,7 +28,7 @@ const categories = (state = [], action) => {
 
 const posts = (state = {}, action) => {
   const { posts, post } = action;
-  const { id, timestamp, title, body, author, category, voteScore, deleted } = post;
+  // const { id, timestamp, title, body, author, category, voteScore, deleted } = post;
 
   switch (action.type) {
     case LOAD_ALL_POSTS:
@@ -41,33 +41,41 @@ const posts = (state = {}, action) => {
     case CREATE_NEW_POST:
       return {
         ...state,
-        [post.id] = post,
+        [post.id]: post,
       }
     case EDIT_POST:
-      return {
-        ...state,
-        [post.id].id = id,
-        [post.id].timestamp = timestamp,
-        [post.id].title = title,
-        [post.id].body = body,
-        [post.id].author = author,
-        [post.id].category = category,
-      }
+      return posts
+        ? posts.filter(id => {
+          posts[post.id].id = post.id
+          posts[post.id].timestamp = post.timestamp
+          posts[post.id].title = post.title
+          posts[post.id].body = post.body
+          posts[post.id].author = post.author
+          posts[post.id].category = post.category
+          return posts
+        })
+        : state
     case DELETE_POST:
-      return {
-        ...state,
-        [post.id].deleted = deleted,
-      }
+      return posts
+        ? posts.filter(id => {
+          posts[post.id].deleted = post.deleted
+          return posts
+        })
+        : state
     case UPVOTE_POST:
-      return {
-        ...state,
-        [post.id].voteScore = voteScore,
-      }
+      return posts
+        ? posts.filter(id => {
+          posts[post.id].voteScore = post.voteScore
+          return posts
+        })
+        : state
     case DOWNVOTE_POST:
-      return {
-        ...state,
-        [post.id].voteScore = voteScore,
-      }
+      return posts
+        ? posts.filter(id => {
+          posts[post.id].voteScore = post.voteScore
+          return posts
+        })
+        : state
     default:
       return state;
   }
@@ -75,38 +83,47 @@ const posts = (state = {}, action) => {
 
 const comments = (state = {}, action) => {
   const { comment, comments } = action;
-  const { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
+  // const { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
 
   switch (action.type) {
     case CREATE_NEW_COMMENT:
       return {
         ...state,
-        [comment.id] = comment
+        [comment.id]: comment
       }
     case EDIT_COMMENT:
-      return {
-        ...state,
-        [comment.id].id = id,
-        [comment.id].parentId = parentId,
-        [comment.id].timestamp = timestamp,
-        [comment.id].body = body,
-        [comment.id].author = author,
-      }
+      return comments
+        ? comments.filter(id => {
+          comments[comment.id].id = comment.id
+          comments[comment.id].timestamp = comment.timestamp
+          comments[comment.id].title = comment.title
+          comments[comment.id].body = comment.body
+          comments[comment.id].author = comment.author
+          comments[comment.id].category = comment.category
+          return comments
+        })
+        : state
     case DELETE_COMMENT:
-      return {
-        ...state,
-        [comment.id].deleted = deleted
-      }
+      return comments
+        ? comments.filter(id => {
+          comments[comment.id].deleted = comment.deleted
+          return comments
+        })
+        : state
     case UPVOTE_COMMENT:
-      return {
-        ...state,
-        [comment.id].voteScore = voteScore
-      }
+      return comments
+        ? comments.filter(id => {
+          comments[comment.id].voteScore = comment.voteScore
+          return comments
+        })
+        : state
     case DOWNVOTE_COMMENT:
-      return {
-        ...state,
-        [comment.id].voteScore = voteScore
-      }
+      return comments
+        ? comments.filter(id => {
+          comments[comment.id].voteScore = comment.voteScore
+          return comments
+        })
+        : state
     default:
       return state;
   }

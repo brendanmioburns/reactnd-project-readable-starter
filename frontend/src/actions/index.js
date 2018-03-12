@@ -87,15 +87,13 @@ export function upvoteComment ({ id, voteScore }) {
   return {
     type: UPVOTE_COMMENT,
     id,
-    deleted,
-    parentDeleted,
+    voteScore,
   }
 }
 export function downvoteComment ({ id, voteScore }) {
   return {
     type: DOWNVOTE_COMMENT,
     id,
-    deleted,
-    parentDeleted,
+    voteScore,
   }
 }
