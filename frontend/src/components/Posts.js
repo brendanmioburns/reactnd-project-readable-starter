@@ -61,8 +61,8 @@ const tilesData = [
 
 class Posts extends Component {
   componentDidMount() {
-    const data = ForumAPI.retrieveAllPosts()
-    console.log('all posts', data)
+    const allPosts = ForumAPI.retrieveAllPosts()
+    console.log('all posts', allPosts)
   }
   render () {
     return (
@@ -73,9 +73,8 @@ class Posts extends Component {
               key={tile.img}
               title={tile.title}
               subtitle={<span>by <b>{tile.author}</b></span>}
-
-
             >
+              <br/>
               <Paper style={style} zDepth={5} />
             </GridTile>
           ))}

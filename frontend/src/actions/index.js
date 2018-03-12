@@ -25,34 +25,24 @@ export function loadAllPosts ({ posts }) {
   }
 }
 
-export function createNewPost ({ id, timestamp, title, body, author, category, voteScore, deleted }) {
+export function createNewPost ({ post }) {
   return {
     type: CREATE_NEW_POST,
-    id,
-    timestamp,
-    title,
-    body,
-    author,
-    category,
-    voteScore,
-    deleted,
+    post,
   }
 }
 
-export function editPost ({ id, title, body }) {
+export function editPost ({ post }) {
   return {
     type: EDIT_POST,
-    id,
-    title,
-    body,
+    post,
   }
 }
 
-export function deletePost ({ id, deleted }) {
+export function deletePost ({ post }) {
   return {
     type: DELETE_POST,
-    id,
-    deleted,
+    post,
   }
 }
 
@@ -72,33 +62,24 @@ export function downvotePost ({ id, voteScore }) {
   }
 }
 
-export function createNewComment ({ id, parentid, timestamp, body, author, voteScore, deleted, parentDeleted }) {
+export function createNewComment ({ comment }) {
   return {
     type: CREATE_NEW_COMMENT,
-    id,
-    parentid,
-    timestamp,
-    body, author,
-    voteScore,
-    deleted,
-    parentDeleted,
+    comment,
   }
 }
 
-export function editComment ({ id, body }) {
+export function editComment ({ comment }) {
   return {
     type: EDIT_COMMENT,
-    id,
-    body,
+    comment,
   }
 }
 
-export function deleteComment ({ id, deleted, parentDeleted }) {
+export function deleteComment ({ comment }) {
   return {
     type: DELETE_COMMENT,
-    id,
-    deleted,
-    parentDeleted,
+    comment,
   }
 }
 
@@ -110,7 +91,7 @@ export function upvoteComment ({ id, voteScore }) {
     parentDeleted,
   }
 }
-export function deleteComment ({ id, voteScore }) {
+export function downvoteComment ({ id, voteScore }) {
   return {
     type: DOWNVOTE_COMMENT,
     id,

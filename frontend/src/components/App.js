@@ -44,10 +44,6 @@ class App extends Component {
         />
         <br/>
         <RaisedButton label="Create Post" primary={true}/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         <Switch>
           <Route exact path="/" render={()=><Posts/>}/>
           <Route exact path="/new" component={CreatePost}/>
@@ -59,6 +55,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+function mapDispatchToProps (dispatch) {
+
 }
 
 export default App;
