@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 
 import {
   LOAD_ALL_CATEGORIES,
+  LOAD_ALL_POSTS_IN_CATEGORY,
   LOAD_ALL_POSTS,
+  LOAD_ALL_COMMENTS_FOR_POST,
   CREATE_NEW_POST,
   EDIT_POST,
   DELETE_POST,
@@ -28,54 +30,52 @@ const categories = (state = [], action) => {
 
 const posts = (state = {}, action) => {
   const { posts, post } = action;
-  // const { id, timestamp, title, body, author, category, voteScore, deleted } = post;
 
   switch (action.type) {
     case LOAD_ALL_POSTS:
       return posts
-        ? posts.reduce((obj, p) => {
-          obj[p.id] = p
-          return obj
-        }, {})
-        : state
+    case LOAD_ALL_POSTS_IN_CATEGORY:
+      return posts
     case CREATE_NEW_POST:
       return {
         ...state,
         [post.id]: post,
       }
     case EDIT_POST:
-      return posts
-        ? posts.filter(id => {
-          posts[post.id].id = post.id
-          posts[post.id].timestamp = post.timestamp
-          posts[post.id].title = post.title
-          posts[post.id].body = post.body
-          posts[post.id].author = post.author
-          posts[post.id].category = post.category
-          return posts
-        })
-        : state
+      return {
+        ...state,
+        [post.id]: {
+          ...state[post.id],
+          title: post.title,
+          body: post.body,
+          author: post.author,
+          category: post.category,
+        }
+      }
     case DELETE_POST:
-      return posts
-        ? posts.filter(id => {
-          posts[post.id].deleted = post.deleted
-          return posts
-        })
-        : state
+      return {
+        ...state,
+        [post.id]: {
+          ...state[post.id],
+          deleted: post.deleted,
+        }
+      }
     case UPVOTE_POST:
-      return posts
-        ? posts.filter(id => {
-          posts[post.id].voteScore = post.voteScore
-          return posts
-        })
-        : state
+      return {
+        ...state,
+        [post.id]: {
+          ...state[post.id],
+          voteScore: post.voteScore,
+        }
+      }
     case DOWNVOTE_POST:
-      return posts
-        ? posts.filter(id => {
-          posts[post.id].voteScore = post.voteScore
-          return posts
-        })
-        : state
+      return {
+        ...state,
+        [post.id]: {
+          ...state[post.id],
+          voteScore: post.voteScore,
+        }
+      }
     default:
       return state;
   }
@@ -86,44 +86,46 @@ const comments = (state = {}, action) => {
   // const { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
 
   switch (action.type) {
+    case LOAD_ALL_COMMENTS_FOR_POST:
+      return comments
     case CREATE_NEW_COMMENT:
       return {
         ...state,
         [comment.id]: comment
       }
     case EDIT_COMMENT:
-      return comments
-        ? comments.filter(id => {
-          comments[comment.id].id = comment.id
-          comments[comment.id].timestamp = comment.timestamp
-          comments[comment.id].title = comment.title
-          comments[comment.id].body = comment.body
-          comments[comment.id].author = comment.author
-          comments[comment.id].category = comment.category
-          return comments
-        })
-        : state
+      return {
+        ...state,
+        [comment.id]: {
+          ...state[comment.id],
+          body: comment.body,
+          author: comment.author,
+        }
+      }
     case DELETE_COMMENT:
-      return comments
-        ? comments.filter(id => {
-          comments[comment.id].deleted = comment.deleted
-          return comments
-        })
-        : state
+      return {
+        ...state,
+        [comment.id]: {
+          ...state[comment.id],
+          deleted: comment.deleted,
+        }
+      }
     case UPVOTE_COMMENT:
-      return comments
-        ? comments.filter(id => {
-          comments[comment.id].voteScore = comment.voteScore
-          return comments
-        })
-        : state
+      return {
+        ...state,
+        [comment.id]: {
+          ...state[comment.id],
+          voteScore: comment.voteScore,
+        }
+      }
     case DOWNVOTE_COMMENT:
-      return comments
-        ? comments.filter(id => {
-          comments[comment.id].voteScore = comment.voteScore
-          return comments
-        })
-        : state
+      return {
+        ...state,
+        [comment.id]: {
+          ...state[comment.id],
+          voteScore: comment.voteScore,
+        }
+      }
     default:
       return state;
   }

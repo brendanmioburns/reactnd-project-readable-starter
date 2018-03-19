@@ -7,8 +7,10 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import MenuDropDown from './MenuDropDown';
-import { retrieveAllCategories, retrieveAllPosts } from '../utils/api';
+import { retrieveAllPostsInCategory, retrieveAllPosts, retrieveCommentsFromSinglePost } from '../utils/api';
 import * as Actions from '../actions';
+import Categories from './Categories';
+import PostDetail from './PostDetail';
 import Posts from './Posts';
 import CreatePost from './CreatePost';
 import EditPost from './EditPost';
@@ -29,45 +31,46 @@ class App extends Component {
     })
   }
 
-  getCategories = () => {
-    retrieveAllCategories()
-      .then((categories) => this.props.loadAllCategories(categories))
-  }
-
   getPosts = () => {
     retrieveAllPosts()
       .then((posts) => this.props.loadAllPosts(posts))
   }
 
+  getComments = (post) => {
+    retrieveCommentsFromSinglePost(post)
+      .then((comments) => this.props.loadAllCommentsForPost(comments))
+  }
+
+  getPostsInCategory = (category) => {
+    retrieveAllPostsInCategory(category)
+      .then((posts) => this.props.loadAllPostsInCategory(posts))
+  }
+
   componentDidMount() {
-    this.getCategories()
-    console.log(this.state)
-    this.getPosts()
-    console.log(this.state)
+    const exPost = {id: "8xf0y6ziyjabvozdd253nd",}
+    const exCat = {name: "redux", path: "redux"}
+    console.log('about to get posts in cat')
+    this.getPostsInCategory(exCat)
+
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Readable Forum</h1>
         </header>
-        <AppBar
-          onMenuClick={this.onMenuClick}
-          menuClicked={this.state.menuClicked}
-        />
-        <br/>
-        <Button label="Create Post" primary={true}/>
+
         <Switch>
-          <Route exact path="/" render={()=><Posts />}/>
-          <Route exact path="/new" component={CreatePost}/>
+          <Route exact path="/" render={() => (
+            <div>
+              <Categories />
+              <Posts />
+            </div>
+          )}/>
           <Route exact path='/:category' component={PostsByCategory} />
-          <Route exact path="/edit:id" component={EditPost}/>
-
+          <Route exact path='/:category/:post_id' component={PostDetail} />
         </Switch>
-
-        <Snackbar open={false}/>
       </div>
     );
   }
@@ -83,8 +86,9 @@ function mapStateToProps ({ categories, posts, comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadAllCategories: (data) => dispatch(Actions.loadAllCategories(data)),
+    loadAllPostsInCategory: (data) => dispatch(Actions.loadAllPostsInCategory(data)),
     loadAllPosts: (data) => dispatch(Actions.loadAllPosts(data)),
+    loadAllCommentsForPost: (data) => dispatch(Actions.loadAllCommentsForPost(data)),
     createNewPost: (data) => dispatch(Actions.createNewPost(data)),
     editPost: (data) => dispatch(Actions.editPost(data)),
     deletePost: (data) => dispatch(Actions.deletePost(data)),

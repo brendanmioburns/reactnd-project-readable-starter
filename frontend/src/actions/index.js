@@ -1,5 +1,7 @@
 export const LOAD_ALL_CATEGORIES = 'LOAD_ALL_CATEGORIES';
+export const LOAD_ALL_POSTS_IN_CATEGORY = 'LOAD_ALL_POSTS_IN_CATEGORY';
 export const LOAD_ALL_POSTS = 'LOAD_ALL_POSTS';
+export const LOAD_ALL_COMMENTS_FOR_POST = 'LOAD_ALL_COMMENTS_FOR_POST';
 export const CREATE_NEW_POST = 'CREATE_NEW_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -18,10 +20,24 @@ export function loadAllCategories (categories) {
   }
 }
 
+export function loadAllPostsInCategory (posts) {
+  return {
+    type: LOAD_ALL_POSTS_IN_CATEGORY,
+    posts,
+  }
+}
+
 export function loadAllPosts (posts) {
   return {
     type: LOAD_ALL_POSTS,
     posts,
+  }
+}
+
+export function loadAllCommentsForPost (comments) {
+  return {
+    type: LOAD_ALL_COMMENTS_FOR_POST,
+    comments,
   }
 }
 
@@ -46,19 +62,17 @@ export function deletePost ({ post }) {
   }
 }
 
-export function upvotePost ({ id, voteScore }) {
+export function upvotePost ({ post }) {
   return {
     type: UPVOTE_POST,
-    id,
-    voteScore,
+    post,
   }
 }
 
-export function downvotePost ({ id, voteScore }) {
+export function downvotePost ({ post }) {
   return {
     type: DOWNVOTE_POST,
-    id,
-    voteScore,
+    post,
   }
 }
 
@@ -83,17 +97,15 @@ export function deleteComment ({ comment }) {
   }
 }
 
-export function upvoteComment ({ id, voteScore }) {
+export function upvoteComment ({ comment }) {
   return {
     type: UPVOTE_COMMENT,
-    id,
-    voteScore,
+    comment,
   }
 }
-export function downvoteComment ({ id, voteScore }) {
+export function downvoteComment ({ comment }) {
   return {
     type: DOWNVOTE_COMMENT,
-    id,
-    voteScore,
+    comment,
   }
 }
