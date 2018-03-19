@@ -7,7 +7,6 @@ import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import MenuDropDown from './MenuDropDown';
-import { retrieveAllPosts, retrieveCommentsFromSinglePost } from '../utils/api';
 import * as Actions from '../actions';
 import Categories from './Categories';
 import PostDetail from './PostDetail';
@@ -29,16 +28,6 @@ class App extends Component {
     this.setState({
       menuClicked: !this.state.menuClicked
     })
-  }
-
-  getPosts = () => {
-    retrieveAllPosts()
-      .then((posts) => this.props.loadAllPosts(posts))
-  }
-
-  getComments = (post) => {
-    retrieveCommentsFromSinglePost(post)
-      .then((comments) => this.props.loadAllCommentsForPost(comments))
   }
 
   componentDidMount() {
@@ -78,8 +67,6 @@ function mapStateToProps ({ categories, posts, comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadAllPosts: (data) => dispatch(Actions.loadAllPosts(data)),
-    loadAllCommentsForPost: (data) => dispatch(Actions.loadAllCommentsForPost(data)),
     createNewPost: (data) => dispatch(Actions.createNewPost(data)),
     editPost: (data) => dispatch(Actions.editPost(data)),
     deletePost: (data) => dispatch(Actions.deletePost(data)),

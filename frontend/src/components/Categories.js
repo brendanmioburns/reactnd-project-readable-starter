@@ -55,7 +55,6 @@ class Categories extends Component {
           {categories.map((category, index) => {
             return (
               <MenuItem key={index} onClick={this.handleClose}>
-                
                 <PostsByCategory
                   category={category.path}
                   title={category.name[0].toUpperCase() + category.name.slice(1)}

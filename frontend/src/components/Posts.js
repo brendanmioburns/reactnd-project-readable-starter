@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { retrieveAllPosts, retrieveCommentsFromSinglePost } from '../utils/api';
 import PostDetail from './PostDetail';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
@@ -16,12 +17,27 @@ const style = {
 
 class Posts extends Component {
 
+  getPosts = () => {
+    retrieveAllPosts()
+      .then((posts) => this.props.loadAllPosts(posts))
+  }
+
+  getComments = (post) => {
+    retrieveCommentsFromSinglePost(post)
+      .then((comments) => this.props.loadAllCommentsForPost(comments))
+  }
+
+  componentDidMount() {
+    this.getPosts()
+    console.log(this.props.posts)
+  }
+
   render () {
     return (
       <div>
-        <GridList cellHeight={500} cellWidth={360} cols={1}>
-
-        </GridList>
+        {Object.keys(this.props.posts).map((postKey) => {
+          <li>{postKey}</li>
+        })}
       </div>
     )
   }
@@ -37,6 +53,7 @@ function mapStateToProps ({ posts, comments }) {
 function mapDispatchToProps (dispatch) {
   return {
     loadAllPosts: (data) => dispatch(Actions.loadAllPosts(data)),
+    loadAllCommentsForPost: (data) => dispatch(Actions.loadAllCommentsForPost(data)),
   }
 }
 

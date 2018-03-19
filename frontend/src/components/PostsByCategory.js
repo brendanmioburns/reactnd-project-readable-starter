@@ -11,7 +11,7 @@ class PostsByCategory extends Component {
       .then((posts) => this.props.loadAllPostsInCategory(posts))
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getPostsInCategory(this.props.category)
   }
 
