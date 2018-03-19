@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import Category from './Category';
+import PostsByCategory from './PostsByCategory';
+import { Link, Route, Switch } from 'react-router-dom';
 import { retrieveAllCategories } from '../utils/api';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
@@ -34,7 +34,7 @@ class Categories extends Component {
   }
 
   render() {
-    const { categories, classes } = this.props;
+    const { categories } = this.props;
     const { anchorEl } = this.state;
 
     return (
@@ -55,9 +55,11 @@ class Categories extends Component {
           {categories.map((category, index) => {
             return (
               <MenuItem key={index} onClick={this.handleClose}>
-                <Link to={`/${category.path}/posts`} style={{textDecoration: 'none'}}>
-                  {category.name[0].toUpperCase() + category.name.slice(1)}
-                </Link>
+                
+                <PostsByCategory
+                  category={category.path}
+                  title={category.name[0].toUpperCase() + category.name.slice(1)}
+                />
               </MenuItem>
             )
           })}
@@ -80,7 +82,7 @@ function mapStateToProps ({ categories }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    loadAllCategories: (data) => dispatch(Actions.loadAllCategories(data))
+    loadAllCategories: (data) => dispatch(Actions.loadAllCategories(data)),
   }
 }
 
