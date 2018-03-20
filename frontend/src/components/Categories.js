@@ -48,21 +48,25 @@ class Categories extends Component {
         </Button>
         <Menu
           id="simple-menu"
-          anchorElement={anchorEl}
+          anchorelement={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
           {categories.map((category, index) => {
             return (
-              <MenuItem key={index} onClick={this.handleClose}>
-                <PostsByCategory
-                  category={category.path}
-                  title={category.name[0].toUpperCase() + category.name.slice(1)}
-                />
+              <MenuItem key={index} onClick={this.handleClose} category={category.name}>
+                <Link
+                  to={`/${category.path}/posts`}
+                  style={{textDecoration: 'none'}}
+                >
+                {`${category.name[0].toUpperCase()}${category.name.slice(1)}`}
+                </Link>
+
               </MenuItem>
             )
           })}
         </Menu>
+
       </div>
     )
   }

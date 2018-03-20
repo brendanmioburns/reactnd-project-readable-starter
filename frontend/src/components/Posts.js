@@ -35,6 +35,8 @@ class Posts extends Component {
   render () {
     return (
       <div>
+        {console.log(this.props.posts)}
+        {console.log(Object.keys(this.props.posts))}
         {Object.keys(this.props.posts).map((postKey) => {
           <li>{postKey}</li>
         })}

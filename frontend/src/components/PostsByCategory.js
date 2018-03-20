@@ -11,28 +11,37 @@ class PostsByCategory extends Component {
       .then((posts) => this.props.loadAllPostsInCategory(posts))
   }
 
-  componentDidMount() {
-    this.getPostsInCategory(this.props.category)
-  }
-
   render() {
+    const { posts } = this.props
+    const { category } = this.props.match.params
+    const categoryTitle = `${category[0].toUpperCase()}${category.slice(1)}`
 
     return (
       <div>
-        <Link to={`/${this.props.category}/posts`} style={{textDecoration: 'none'}}>
+        <h2>{categoryTitle}</h2>
+        {console.log('category from PBC', this.props.category)}
+        {console.log('posts from PBC', this.props.posts)}
 
-          {Object.keys(this.props)}
-
+        <ul>
+          {posts.filter((post) => {
+            return post.category === category
+          }).map((post, index) => (
+            <li key={index}>{post.title}</li>
+          ))}
+        </ul>
+        <div>
           <Link to="/">Back to Home</Link>
-        </Link>
+        </div>
+
       </div>
     )
   }
 }
 
-function mapStateToProps ({ posts }) {
+function mapStateToProps ({ categories, posts }) {
   return {
-    posts
+    categories,
+    posts,
   }
 }
 
