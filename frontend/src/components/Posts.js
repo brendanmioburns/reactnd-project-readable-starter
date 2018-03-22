@@ -29,17 +29,19 @@ class Posts extends Component {
 
   componentDidMount() {
     this.getPosts()
-    console.log(this.props.posts)
   }
 
   render () {
+    const { posts } = this.props
+
     return (
       <div>
-        {console.log(this.props.posts)}
-        {console.log(Object.keys(this.props.posts))}
-        {Object.keys(this.props.posts).map((postKey) => {
-          <li>{postKey}</li>
-        })}
+        {console.log(posts)}
+        <ul>
+          {posts.map((post, index) => (
+            <li key={index}>{post.title}-{post.body}</li>
+          ))}
+        </ul>
       </div>
     )
   }

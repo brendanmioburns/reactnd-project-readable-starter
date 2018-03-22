@@ -11,6 +11,10 @@ class PostsByCategory extends Component {
       .then((posts) => this.props.loadAllPostsInCategory(posts))
   }
 
+  componentDidMount() {
+    this.getPostsInCategory(this.props.match.params.category)
+  }
+
   render() {
     const { posts } = this.props
     const { category } = this.props.match.params
@@ -19,13 +23,11 @@ class PostsByCategory extends Component {
     return (
       <div>
         <h2>{categoryTitle}</h2>
-        {console.log('category from PBC', this.props.category)}
+        {console.log('category from PBC', this.props.match.params.category)}
         {console.log('posts from PBC', this.props.posts)}
 
         <ul>
-          {posts.filter((post) => {
-            return post.category === category
-          }).map((post, index) => (
+          {posts.map((post, index) => (
             <li key={index}>{post.title}</li>
           ))}
         </ul>

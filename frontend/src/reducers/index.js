@@ -28,7 +28,7 @@ const categories = (state = [], action) => {
   }
 }
 
-const posts = (state = {}, action) => {
+const posts = (state = [], action) => {
   const { posts, post } = action;
 
   switch (action.type) {
