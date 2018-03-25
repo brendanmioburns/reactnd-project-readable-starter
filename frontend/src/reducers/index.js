@@ -37,6 +37,8 @@ const posts = (state = [], action) => {
       return posts
     case LOAD_ALL_POSTS_IN_CATEGORY:
       return posts
+    case LOAD_SINGLE_POST:
+      return [post]
     case CREATE_NEW_POST:
       return {
         ...state,
@@ -62,36 +64,40 @@ const posts = (state = [], action) => {
         }
       }
     case UPVOTE_POST:
-      return {
-        ...state,
-        [post.id]: {
-          ...state[post.id],
-          voteScore: post.voteScore,
+      return state.map((item, index) => {
+        if (index !== action.index) {
+          return item
         }
-      }
+        return {
+          ...item,
+          ...action.item,
+        }
+      })
     case DOWNVOTE_POST:
-      return {
-        ...state,
-        [post.id]: {
-          ...state[post.id],
-          voteScore: post.voteScore,
+      return state.map((item, index) => {
+        if (index !== action.index) {
+          return item
         }
-      }
+        return {
+          ...item,
+          ...action.item,
+        }
+      })
     default:
       return state;
   }
 }
 
-const selectedPost = (state = {}, action) => {
-  const { post } = action;
-
-  switch (action.type) {
-    case LOAD_SINGLE_POST:
-      return post
-    default:
-      return state;
-  }
-}
+// const selectedPost = (state = {}, action) => {
+//   const { post } = action;
+//
+//   switch (action.type) {
+//     case LOAD_SINGLE_POST:
+//       return post
+//     default:
+//       return state;
+//   }
+// }
 
 const comments = (state = [], action) => {
   const { comment, comments } = action;
@@ -146,6 +152,6 @@ const comments = (state = [], action) => {
 export default combineReducers({
   categories,
   posts,
-  selectedPost,
+  // selectedPost,
   comments,
 });

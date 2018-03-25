@@ -79,8 +79,8 @@ export const retrieveSinglePost = (id) => {
 //     Used for voting on a post
 //   PARAMS:
 //     option - String: Either "upVote" or "downVote"
-export const voteOnPost = (post, option) => {
-  return fetch(`${api}/posts/${post.id}`, {
+export const voteOnPost = (id, option) => {
+  return fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers,
     body: JSON.stringify({

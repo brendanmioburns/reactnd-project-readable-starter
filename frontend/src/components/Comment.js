@@ -14,6 +14,24 @@ const style = {
 
 class Comment extends Component {
 
+  state = {
+    score: this.props.comment.voteScore
+  }
+
+  handleUpVote = () => {
+
+    this.setState({
+      score: this.state.score + 1
+    })
+  }
+
+  handleDownVote = () => {
+
+    this.setState({
+      score: this.state.score - 1
+    })
+  }
+
   render() {
     const { timestamp, author, body, voteScore } = this.props.comment
 
@@ -30,15 +48,15 @@ class Comment extends Component {
           </Typography>
           <br/>
           <Typography>
-            Vote Score: {voteScore}
+            Vote Score: {this.state.score}
           </Typography>
         </CardContent>
         <CardActions style={{textAlign: 'center',
           display: 'inline-block'}}>
           <Button size="small">Edit Comment</Button>
           <Button size="small">Delete Comment</Button>
-          <Button size="small">Upvote Comment</Button>
-          <Button size="small">Downvote Comment</Button>
+          <Button size="small" onClick={this.handleUpVote}>Upvote Comment</Button>
+          <Button size="small" onClick={this.handleDownVote}>Downvote Comment</Button>
         </CardActions>
         <br/>
       </Card>

@@ -70,48 +70,48 @@ export function deletePost ({ post }) {
   }
 }
 
-export function upvotePost ({ post }) {
+export function upvotePost (post) {
   return {
     type: UPVOTE_POST,
     post,
   }
 }
 
-export function downvotePost ({ post }) {
+export function downvotePost (post) {
   return {
     type: DOWNVOTE_POST,
     post,
   }
 }
 
-export function createNewComment ({ comment }) {
+export function createNewComment (comment) {
   return {
     type: CREATE_NEW_COMMENT,
     comment,
   }
 }
 
-export function editComment ({ comment }) {
+export function editComment (comment) {
   return {
     type: EDIT_COMMENT,
     comment,
   }
 }
 
-export function deleteComment ({ comment }) {
+export function deleteComment (comment) {
   return {
     type: DELETE_COMMENT,
     comment,
   }
 }
 
-export function upvoteComment ({ comment }) {
+export function upvoteComment (comment) {
   return {
     type: UPVOTE_COMMENT,
     comment,
   }
 }
-export function downvoteComment ({ comment }) {
+export function downvoteComment (comment) {
   return {
     type: DOWNVOTE_COMMENT,
     comment,

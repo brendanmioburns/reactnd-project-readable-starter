@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CommentsForPost from './CommentsForPost';
 import * as Actions from '../actions';
-import { retrieveSinglePost, retrieveCommentsFromSinglePost } from '../utils/api';
+import { retrieveSinglePost, retrieveCommentsFromSinglePost, voteOnPost } from '../utils/api';
 import { capitalize, translateDate } from '../utils/helpers';
 import { connect } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
@@ -18,6 +18,28 @@ const style = {
 };
 
 class PostDetail extends Component {
+
+  state = {
+    score: this.props.posts[0].voteScore
+  }
+
+  handleUpVote = () => {
+    voteOnPost(this.props.posts[0].id, "upVote")
+      .then((data) => this.props.upvotePost(data))
+
+    this.setState({
+      score: this.state.score + 1
+    })
+  }
+
+  handleDownVote = () => {
+    voteOnPost(this.props.posts[0].id, "downVote")
+      .then((data) => this.props.downvotePost(data))
+
+    this.setState({
+      score: this.state.score - 1
+    })
+  }
 
   getPost = (id) => {
     retrieveSinglePost(id)
@@ -37,8 +59,9 @@ class PostDetail extends Component {
   }
 
   render() {
-    const { timestamp, category, id, title, body, author, voteScore, deleted, commentCount } = this.props.selectedPost
-    // const categoryTitle = `${category[0].toUpperCase()}${category.slice(1)}`
+    const { timestamp, category, id, title, body, author, voteScore, deleted, commentCount } = this.props.posts[0]
+    const categoryTitle = capitalize(category)
+
     return (
       <div>
         <h2>{title}</h2>
@@ -51,19 +74,22 @@ class PostDetail extends Component {
           {body}
         </Typography>
         <br/>
+        <Typography>
+          Vote Score: {this.state.score}
+        </Typography>
         <Button size="small">Edit Post</Button>
         <Button size="small">Delete Post</Button>
-        <Button size="small">Upvote Post</Button>
-        <Button size="small">Downvote Post</Button>
+        <Button size="small" onClick={this.handleUpVote}>Upvote Post</Button>
+        <Button size="small" onClick={this.handleDownVote}>Downvote Post</Button>
         <br/>
         <br/>
         <Typography>
           {`Comments (${commentCount}):`}
         </Typography>
-        <CommentsForPost post={this.props.selectedPost} comments={this.props.comments}/>
+        <CommentsForPost post={this.props.posts[0]} comments={this.props.comments}/>
         <br/>
         <br/>
-        <Link to={`/${category}/posts`}>All {this.props.selectedPost.category} Posts</Link>
+        <Link to={`/${category}/posts`}>All {categoryTitle} Posts</Link>
         <br/>
         <br/>
         <Link to="/">Back to Home</Link>
@@ -72,10 +98,9 @@ class PostDetail extends Component {
   }
 }
 
-function mapStateToProps ({ posts, selectedPost, comments }) {
+function mapStateToProps ({ posts, comments }) {
   return {
     posts,
-    selectedPost,
     comments,
   }
 }
@@ -84,6 +109,8 @@ function mapDispatchToProps (dispatch) {
   return {
     loadSinglePost: (data) => dispatch(Actions.loadSinglePost(data)),
     loadAllCommentsForPost: (data) => dispatch(Actions.loadAllCommentsForPost(data)),
+    upvotePost: (data) => dispatch(Actions.upvotePost(data)),
+    downvotePost: (data) => dispatch(Actions.downvotePost(data)),
   }
 }
 

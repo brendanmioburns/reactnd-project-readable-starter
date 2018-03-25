@@ -3,6 +3,7 @@ import * as Actions from '../actions';
 import { connect } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { translateDate } from '../utils/helpers';
+import { voteOnPost } from '../utils/api';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -16,6 +17,28 @@ const style = {
 };
 
 class Post extends Component {
+
+  state = {
+    score: this.props.post.voteScore
+  }
+
+  handleUpVote = () => {
+    voteOnPost(this.props.post.id, "upVote")
+      .then((data) => this.props.upvotePost(data))
+
+    this.setState({
+      score: this.state.score + 1
+    })
+  }
+
+  handleDownVote = () => {
+    voteOnPost(this.props.post.id, "downVote")
+      .then((data) => this.props.downvotePost(data))
+
+    this.setState({
+      score: this.state.score - 1
+    })
+  }
 
   render() {
     const { timestamp, category, id, title, body, author, voteScore, deleted, commentCount } = this.props.post;
@@ -36,6 +59,9 @@ class Post extends Component {
               </Typography>
               <br/>
               <Typography>
+                Vote Score: {this.state.score}
+              </Typography>
+              <Typography>
                 Comments: {commentCount}
               </Typography>
             </CardContent>
@@ -43,8 +69,8 @@ class Post extends Component {
             display: 'inline-block'}}>
               <Button size="small">Edit Post</Button>
               <Button size="small">Delete Post</Button>
-              <Button size="small">Upvote Post</Button>
-              <Button size="small">Downvote Post</Button>
+              <Button size="small" onClick={this.handleUpVote}>Upvote Post</Button>
+              <Button size="small" onClick={this.handleDownVote}>Downvote Post</Button>
             </CardActions>
           </Card>
         )
@@ -55,4 +81,14 @@ class Post extends Component {
   }
 }
 
-export default Post;
+function mapDispatchToProps (dispatch) {
+  return {
+    upvotePost: (data) => dispatch(Actions.upvotePost(data)),
+    downvotePost: (data) => dispatch(Actions.downvotePost(data)),
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Post);
