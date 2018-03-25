@@ -4,6 +4,7 @@ import {
   LOAD_ALL_CATEGORIES,
   LOAD_ALL_POSTS_IN_CATEGORY,
   LOAD_ALL_POSTS,
+  LOAD_SINGLE_POST,
   LOAD_ALL_COMMENTS_FOR_POST,
   CREATE_NEW_POST,
   EDIT_POST,
@@ -81,7 +82,18 @@ const posts = (state = [], action) => {
   }
 }
 
-const comments = (state = {}, action) => {
+const selectedPost = (state = {}, action) => {
+  const { post } = action;
+
+  switch (action.type) {
+    case LOAD_SINGLE_POST:
+      return post
+    default:
+      return state;
+  }
+}
+
+const comments = (state = [], action) => {
   const { comment, comments } = action;
   // const { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = comment;
 
@@ -134,5 +146,6 @@ const comments = (state = {}, action) => {
 export default combineReducers({
   categories,
   posts,
+  selectedPost,
   comments,
 });

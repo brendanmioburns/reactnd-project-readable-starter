@@ -68,8 +68,8 @@ export const createNewPost = (newPost) => {
 // GET /posts/:id
 //   USAGE:
 //     Get the details of a single post
-export const retrieveSinglePost = (post) => {
-  return fetch(`${api}/posts/${post.id}`, { headers })
+export const retrieveSinglePost = (id) => {
+  return fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
 }
@@ -127,8 +127,8 @@ export const deletePost = (post) => {
 // GET /posts/:id/comments
 //   USAGE:
 //     Get all the comments for a single post
-export const retrieveCommentsFromSinglePost = (post) => {
-  return fetch(`${api}/posts/${post.id}/comments`, { headers })
+export const retrieveCommentsFromSinglePost = (id) => {
+  return fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data)
 }

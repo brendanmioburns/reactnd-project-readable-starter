@@ -16,8 +16,9 @@ class Categories extends Component {
     anchorEl: null
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget })
+  handleClick = e => {
+    e.preventDefault()
+    this.setState({ anchorEl: e.currentTarget })
   }
 
   handleClose = () => {
@@ -51,15 +52,19 @@ class Categories extends Component {
           anchorelement={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
+          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
         >
           {categories.map((category, index) => {
+            const categoryMenuItem = `${category.name[0].toUpperCase()}${category.name.slice(1)}`;
+
             return (
-              <MenuItem key={index} onClick={this.handleClose} category={category.name}>
+              <MenuItem key={index} onClick={this.handleClose}>
                 <Link
                   to={`/${category.path}/posts`}
                   style={{textDecoration: 'none'}}
                 >
-                {`${category.name[0].toUpperCase()}${category.name.slice(1)}`}
+                {categoryMenuItem}
                 </Link>
 
               </MenuItem>
@@ -71,11 +76,6 @@ class Categories extends Component {
     )
   }
 }
-
-const style = {
-  display: 'inline-block',
-  margin: '16px 32px 16px 0',
-};
 
 function mapStateToProps ({ categories }) {
   return {

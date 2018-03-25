@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Post from './Post';
 import * as Actions from '../actions';
 import { retrieveAllPostsInCategory } from '../utils/api';
+import { capitalize } from '../utils/helpers';
 import { Link, Route, Switch } from 'react-router-dom';
 
 class PostsByCategory extends Component {
@@ -12,38 +14,33 @@ class PostsByCategory extends Component {
   }
 
   componentDidMount() {
-    this.getPostsInCategory(this.props.match.params.category)
+    const { category } = this.props.match.params
+    
+    this.getPostsInCategory(category)
   }
 
   render() {
     const { posts } = this.props
     const { category } = this.props.match.params
-    const categoryTitle = `${category[0].toUpperCase()}${category.slice(1)}`
 
     return (
       <div>
-        <h2>{categoryTitle}</h2>
-        {console.log('category from PBC', this.props.match.params.category)}
-        {console.log('posts from PBC', this.props.posts)}
-
-        <ul>
-          {posts.map((post, index) => (
-            <li key={index}>{post.title}</li>
-          ))}
-        </ul>
-        <div>
-          <Link to="/">Back to Home</Link>
-        </div>
-
+        <h2>{capitalize(category)}</h2>
+        {posts.map((post) => (
+          <div>
+            <Post post={post} />
+            <br/>
+          </div>
+        ))}
+        <Link to="/">Back to Home</Link>
       </div>
     )
   }
 }
 
-function mapStateToProps ({ categories, posts }) {
+function mapStateToProps ({ posts }) {
   return {
-    categories,
-    posts,
+    posts
   }
 }
 

@@ -6,11 +6,11 @@ import '../App.css';
 import AppBar from 'material-ui/AppBar';
 import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
-import MenuDropDown from './MenuDropDown';
 import * as Actions from '../actions';
 import Categories from './Categories';
-import PostDetail from './PostDetail';
+import Post from './Post';
 import Posts from './Posts';
+import PostDetail from './PostDetail';
 import CreatePost from './CreatePost';
 import EditPost from './EditPost';
 import PostsByCategory from './PostsByCategory';
@@ -45,10 +45,13 @@ class App extends Component {
             <Route exact path="/" render={() => (
               <div>
                 <Categories />
+                <br/>
+                <br/>
                 <Posts />
               </div>
             )}/>
-            <Route path='/:category/posts' component={PostsByCategory} />
+            <Route exact path='/:category/posts' component={PostsByCategory} />
+            <Route exact path='/:category/posts/:post_id' component={PostDetail} />
           </Switch>
         </div>
       </Router>

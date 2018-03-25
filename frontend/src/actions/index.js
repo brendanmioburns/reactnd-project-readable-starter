@@ -2,6 +2,7 @@ export const LOAD_ALL_CATEGORIES = 'LOAD_ALL_CATEGORIES';
 export const LOAD_ALL_POSTS_IN_CATEGORY = 'LOAD_ALL_POSTS_IN_CATEGORY';
 export const LOAD_ALL_POSTS = 'LOAD_ALL_POSTS';
 export const LOAD_ALL_COMMENTS_FOR_POST = 'LOAD_ALL_COMMENTS_FOR_POST';
+export const LOAD_SINGLE_POST = 'LOAD_SINGLE_POST';
 export const CREATE_NEW_POST = 'CREATE_NEW_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -38,6 +39,13 @@ export function loadAllCommentsForPost (comments) {
   return {
     type: LOAD_ALL_COMMENTS_FOR_POST,
     comments,
+  }
+}
+
+export function loadSinglePost (post) {
+  return {
+    type: LOAD_SINGLE_POST,
+    post,
   }
 }
 
