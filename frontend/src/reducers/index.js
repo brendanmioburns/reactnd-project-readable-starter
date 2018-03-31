@@ -6,7 +6,7 @@ import {
   LOAD_ALL_POSTS,
   LOAD_SINGLE_POST,
   LOAD_ALL_COMMENTS_FOR_POST,
-  CREATE_NEW_POST,
+  MAKE_NEW_POST,
   EDIT_POST,
   DELETE_POST,
   UPVOTE_POST,
@@ -39,11 +39,10 @@ const posts = (state = [], action) => {
       return posts
     case LOAD_SINGLE_POST:
       return [post]
-    case CREATE_NEW_POST:
-      return {
-        ...state,
-        [post.id]: post,
-      }
+    case MAKE_NEW_POST:
+      let newState = state.slice();
+      newState.splice(action.index, 0, post);
+      return newState;
     case EDIT_POST:
       return {
         ...state,
@@ -56,13 +55,7 @@ const posts = (state = [], action) => {
         }
       }
     case DELETE_POST:
-      return {
-        ...state,
-        [post.id]: {
-          ...state[post.id],
-          deleted: post.deleted,
-        }
-      }
+      return state.slice().splice(action.index, 1);
     case UPVOTE_POST:
       return state.map((item, index) => {
         if (index !== action.index) {

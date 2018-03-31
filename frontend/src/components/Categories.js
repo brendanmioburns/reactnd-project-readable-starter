@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PostsByCategory from './PostsByCategory';
 import { Link, Route, Switch } from 'react-router-dom';
 import { retrieveAllCategories } from '../utils/api';
+import { capitalize } from '../utils/helpers';
 import { connect } from 'react-redux';
 import * as Actions from '../actions';
 import Grid from 'material-ui/Grid';
@@ -39,7 +40,7 @@ class Categories extends Component {
     const { anchorEl } = this.state;
 
     return (
-      <div style={{float:'left'}}>
+      <div style={{float: 'left'}}>
         <Button
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup="true"
@@ -49,29 +50,21 @@ class Categories extends Component {
         </Button>
         <Menu
           id="simple-menu"
-          anchorelement={anchorEl}
+          anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
         >
-          {categories.map((category, index) => {
-            const categoryMenuItem = `${category.name[0].toUpperCase()}${category.name.slice(1)}`;
-
-            return (
-              <MenuItem key={index} onClick={this.handleClose}>
-                <Link
-                  to={`/${category.path}/posts`}
-                  style={{textDecoration: 'none'}}
-                >
-                {categoryMenuItem}
-                </Link>
-
-              </MenuItem>
-            )
-          })}
+          {categories.map((category, index) => (
+            <MenuItem key={index} onClick={this.handleClose}>
+              <Link
+                to={`/${category.path}/posts`}
+                style={{textDecoration: 'none'}}
+              >
+              {capitalize(category.name)}
+              </Link>
+            </MenuItem>
+          ))}
         </Menu>
-
       </div>
     )
   }

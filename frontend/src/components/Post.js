@@ -23,7 +23,9 @@ class Post extends Component {
   }
 
   handleUpVote = () => {
-    voteOnPost(this.props.post.id, "upVote")
+    const { id } = this.props.post
+
+    voteOnPost(id, "upVote")
       .then((data) => this.props.upvotePost(data))
 
     this.setState({
@@ -32,7 +34,9 @@ class Post extends Component {
   }
 
   handleDownVote = () => {
-    voteOnPost(this.props.post.id, "downVote")
+    const { id } = this.props.post
+
+    voteOnPost(id, "downVote")
       .then((data) => this.props.downvotePost(data))
 
     this.setState({

@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import * as Actions from '../actions';
 import GridList, { GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
+import Button from "material-ui/Button";
 import Paper from 'material-ui/Paper';
+import { Link, Route, Switch } from 'react-router-dom';
 
 class Posts extends Component {
 
@@ -23,6 +25,13 @@ class Posts extends Component {
 
     return (
       <div>
+        <Button>
+          <Link
+            to={`/new`}
+          >
+          New Post
+          </Link>
+        </Button>
         {posts.map((post) => (
           <Post post={post} />
         ))}

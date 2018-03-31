@@ -3,7 +3,7 @@ export const LOAD_ALL_POSTS_IN_CATEGORY = 'LOAD_ALL_POSTS_IN_CATEGORY';
 export const LOAD_ALL_POSTS = 'LOAD_ALL_POSTS';
 export const LOAD_ALL_COMMENTS_FOR_POST = 'LOAD_ALL_COMMENTS_FOR_POST';
 export const LOAD_SINGLE_POST = 'LOAD_SINGLE_POST';
-export const CREATE_NEW_POST = 'CREATE_NEW_POST';
+export const MAKE_NEW_POST = 'MAKE_NEW_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPVOTE_POST = 'UPVOTE_POST';
@@ -49,21 +49,21 @@ export function loadSinglePost (post) {
   }
 }
 
-export function createNewPost ({ post }) {
+export function makeNewPost (post) {
   return {
-    type: CREATE_NEW_POST,
+    type: MAKE_NEW_POST,
     post,
   }
 }
 
-export function editPost ({ post }) {
+export function editPost (post) {
   return {
     type: EDIT_POST,
     post,
   }
 }
 
-export function deletePost ({ post }) {
+export function deletePost (post) {
   return {
     type: DELETE_POST,
     post,
