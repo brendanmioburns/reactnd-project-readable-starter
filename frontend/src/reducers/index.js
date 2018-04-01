@@ -8,7 +8,7 @@ import {
   LOAD_ALL_COMMENTS_FOR_POST,
   MAKE_NEW_POST,
   EDIT_POST,
-  DELETE_POST,
+  REMOVE_POST,
   UPVOTE_POST,
   DOWNVOTE_POST,
   CREATE_NEW_COMMENT,
@@ -31,6 +31,7 @@ const categories = (state = [], action) => {
 
 const posts = (state = [], action) => {
   const { posts, post } = action;
+  let newState = state.slice();
 
   switch (action.type) {
     case LOAD_ALL_POSTS:
@@ -40,8 +41,7 @@ const posts = (state = [], action) => {
     case LOAD_SINGLE_POST:
       return [post]
     case MAKE_NEW_POST:
-      let newState = state.slice();
-      newState.splice(action.index, 0, post);
+      newState.push(newState.length - 1, 0, post);
       return newState;
     case EDIT_POST:
       return {
@@ -54,8 +54,9 @@ const posts = (state = [], action) => {
           category: post.category,
         }
       }
-    case DELETE_POST:
-      return state.slice().splice(action.index, 1);
+    case REMOVE_POST:
+      newState.filter((ele) => ele.id !== post.id);
+      return newState;
     case UPVOTE_POST:
       return state.map((item, index) => {
         if (index !== action.index) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Button from "material-ui/Button";
@@ -37,7 +38,6 @@ class CreatePost extends Component {
   }
 
   onSubmit = e => {
-    e.preventDefault()
     this.addNewPost(this.state)
     this.setState({
       title: '',
@@ -48,7 +48,6 @@ class CreatePost extends Component {
   }
 
   render () {
-console.log(this.state)
     return (
       <form>
         <h2>Create a New Post</h2>
@@ -101,7 +100,14 @@ console.log(this.state)
         />
         <br />
         <br />
-        <Button label="Submit" onClick={e => this.onSubmit(e)} primary>Submit</Button>
+        <Button label="Submit" onClick={e => this.onSubmit(e)} primary>
+          <Link to={'/'}>
+            Submit
+          </Link>
+        </Button>
+        <br/>
+        <br/>
+        <Link to="/">Back to Home</Link>
       </form>
     )
   }

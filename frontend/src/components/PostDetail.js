@@ -20,29 +20,29 @@ const style = {
 class PostDetail extends Component {
 
   state = {
-    score: this.props.posts[0].voteScore
+    score: 0,
   }
 
   handleUpVote = () => {
-    const { id } = this.props.posts[0]
-
-    voteOnPost(id, "upVote")
-      .then((data) => this.props.upvotePost(data))
+    const { post_id } = this.props.match.params
 
     this.setState({
-      score: this.state.score + 1
+      score: this.state.score++
     })
+
+    voteOnPost(post_id, "upVote")
+      .then((data) => this.props.upvotePost(data))
   }
 
   handleDownVote = () => {
-    const { id } = this.props.posts[0]
-    
-    voteOnPost(id, "downVote")
-      .then((data) => this.props.downvotePost(data))
+    const { post_id } = this.props.match.params
 
     this.setState({
-      score: this.state.score - 1
+      score: this.state.score--
     })
+
+    voteOnPost(post_id, "downVote")
+      .then((data) => this.props.downvotePost(data))
   }
 
   getPost = (id) => {
@@ -79,7 +79,7 @@ class PostDetail extends Component {
         </Typography>
         <br/>
         <Typography>
-          Vote Score: {this.state.score}
+          Vote Score: {this.props.posts[0].voteScore}
         </Typography>
         <Button size="small">Edit Post</Button>
         <Button size="small">Delete Post</Button>

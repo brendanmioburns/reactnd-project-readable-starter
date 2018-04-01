@@ -3,7 +3,7 @@ import * as Actions from '../actions';
 import { connect } from 'react-redux';
 import { Link, Route, Switch } from 'react-router-dom';
 import { translateDate } from '../utils/helpers';
-import { voteOnPost } from '../utils/api';
+import { deletePost, voteOnPost } from '../utils/api';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -19,7 +19,19 @@ const style = {
 class Post extends Component {
 
   state = {
-    score: this.props.post.voteScore
+    score: this.props.post.voteScore,
+    deleted: this.props.post.deleted,
+  }
+
+  handleDelete = () => {
+    const { post } = this.props
+
+    deletePost(post)
+      .then((data) => this.props.removePost(data))
+
+    this.setState({
+      deleted: !this.props.post.deleted,
+    })
   }
 
   handleUpVote = () => {
@@ -49,7 +61,7 @@ class Post extends Component {
 
     return (
       <div>
-        {deleted === false && (
+        {deleted === false && this.state.deleted === false && (
           <Card style={style}>
             <CardContent>
               <Typography>{translateDate(timestamp)}</Typography>
@@ -69,10 +81,9 @@ class Post extends Component {
                 Comments: {commentCount}
               </Typography>
             </CardContent>
-            <CardActions style={{textAlign: 'center',
-            display: 'inline-block'}}>
+            <CardActions style={{textAlign: 'center', display: 'inline-block'}}>
               <Button size="small">Edit Post</Button>
-              <Button size="small">Delete Post</Button>
+              <Button size="small" onClick={this.handleDelete}>Delete Post</Button>
               <Button size="small" onClick={this.handleUpVote}>Upvote Post</Button>
               <Button size="small" onClick={this.handleDownVote}>Downvote Post</Button>
             </CardActions>
@@ -85,8 +96,10 @@ class Post extends Component {
   }
 }
 
+
 function mapDispatchToProps (dispatch) {
   return {
+    removePost: (data) => dispatch(Actions.removePost(data)),
     upvotePost: (data) => dispatch(Actions.upvotePost(data)),
     downvotePost: (data) => dispatch(Actions.downvotePost(data)),
   }

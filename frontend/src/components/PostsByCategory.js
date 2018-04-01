@@ -15,7 +15,7 @@ class PostsByCategory extends Component {
 
   componentDidMount() {
     const { category } = this.props.match.params
-    
+
     this.getPostsInCategory(category)
   }
 
@@ -26,9 +26,9 @@ class PostsByCategory extends Component {
     return (
       <div>
         <h2>{capitalize(category)}</h2>
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <div>
-            <Post post={post} />
+            <Post post={post} key={index}/>
             <br/>
           </div>
         ))}

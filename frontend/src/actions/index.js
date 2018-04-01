@@ -5,7 +5,7 @@ export const LOAD_ALL_COMMENTS_FOR_POST = 'LOAD_ALL_COMMENTS_FOR_POST';
 export const LOAD_SINGLE_POST = 'LOAD_SINGLE_POST';
 export const MAKE_NEW_POST = 'MAKE_NEW_POST';
 export const EDIT_POST = 'EDIT_POST';
-export const DELETE_POST = 'DELETE_POST';
+export const REMOVE_POST = 'REMOVE_POST';
 export const UPVOTE_POST = 'UPVOTE_POST';
 export const DOWNVOTE_POST = 'DOWNVOTE_POST';
 export const CREATE_NEW_COMMENT = 'CREATE_NEW_COMMENT';
@@ -63,9 +63,9 @@ export function editPost (post) {
   }
 }
 
-export function deletePost (post) {
+export function removePost (post) {
   return {
-    type: DELETE_POST,
+    type: REMOVE_POST,
     post,
   }
 }

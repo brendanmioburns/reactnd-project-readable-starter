@@ -32,8 +32,8 @@ class Posts extends Component {
           New Post
           </Link>
         </Button>
-        {posts.map((post) => (
-          <Post post={post} />
+        {posts.map((post, index) => (
+          <Post post={post} key={index}/>
         ))}
       </div>
     )
